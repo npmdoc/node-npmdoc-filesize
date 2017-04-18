@@ -1,9 +1,14 @@
-# api documentation for  [filesize (v3.5.6)](http://filesizejs.com)  [![npm package](https://img.shields.io/npm/v/npmdoc-filesize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-filesize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-filesize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-filesize)
+# npmdoc-filesize
+
+#### api documentation for  [filesize (v3.5.6)](http://filesizejs.com)  [![npm package](https://img.shields.io/npm/v/npmdoc-filesize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-filesize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-filesize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-filesize)
+
 #### JavaScript library to generate a human readable String describing the file size
 
-[![NPM](https://nodei.co/npm/filesize.png?downloads=true)](https://www.npmjs.com/package/filesize)
+[![NPM](https://nodei.co/npm/filesize.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/filesize)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-filesize/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-filesize_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-filesize/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-filesize/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-filesize/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-filesize/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-filesize/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-filesize/build/screenCapture.npmPackageListing.svg)
 
@@ -17,8 +22,7 @@
 
 {
     "author": {
-        "name": "Jason Mulligan",
-        "email": "jason.mulligan@avoidwork.com"
+        "name": "Jason Mulligan"
     },
     "bugs": {
         "url": "https://github.com/avoidwork/filesize.js/issues"
@@ -59,13 +63,11 @@
     "main": "lib/filesize",
     "maintainers": [
         {
-            "name": "avoidwork",
-            "email": "jason@attack.io"
+            "name": "avoidwork"
         }
     ],
     "name": "filesize",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/avoidwork/filesize.js.git"
@@ -75,47 +77,6 @@
     },
     "version": "3.5.6"
 }
-```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module filesize](#apidoc.module.filesize)
-1.  [function <span class="apidocSignatureSpan">filesize.</span>partial (opt)](#apidoc.element.filesize.partial)
-
-
-
-# <a name="apidoc.module.filesize"></a>[module filesize](#apidoc.module.filesize)
-
-#### <a name="apidoc.element.filesize.partial"></a>[function <span class="apidocSignatureSpan">filesize.</span>partial (opt)](#apidoc.element.filesize.partial)
-- description and source-code
-```javascript
-partial = function (opt) {
-		return function (arg) {
-			return filesize(arg, opt);
-		};
-	}
-```
-- example usage
-```shell
-...
-filesize(1024, {output: "exponent"}); // 1
-filesize(265318, {standard: "iec"});  // "259.1 KiB"
-filesize(265318, {standard: "iec", fullform: true}); // "259.1 kibibytes"
-filesize(12, {fullform: true, fullforms: ["байтов"]});  // "12 байтов"
-'''
-
-## Partial Application
-'filesize.partial()' takes the second parameter of 'filesize()' and returns a new function with the configuration applied
-upon execution. This can be used to reduce 'Object' creation if you call 'filesize()' without caching the 'descriptor'
-in lexical scope.
-
-'''javascript
-const size = filesize.partial({standard: "iec"});
-
-size(265318); // "259.1 KiB"
-...
 ```
 
 
