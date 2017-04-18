@@ -63,9 +63,53 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.filesize.filesize">
+            function <span class="apidocSignatureSpan"></span>filesize
+            <span class="apidocSignatureSpan">(arg)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.filesize.partial">
             function <span class="apidocSignatureSpan">filesize.</span>partial
             <span class="apidocSignatureSpan">(opt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.filesize.toString">
+            function <span class="apidocSignatureSpan">filesize.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.filesize.partial">module filesize.partial</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.filesize.partial.partial">
+            function <span class="apidocSignatureSpan">filesize.</span>partial
+            <span class="apidocSignatureSpan">(opt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.filesize.toString">module filesize.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.filesize.toString.toString">
+            function <span class="apidocSignatureSpan">filesize.</span>toString
+            <span class="apidocSignatureSpan">()</span>
             </a>
 
         </li>
@@ -76,6 +120,132 @@
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.filesize" id="apidoc.module.filesize">module filesize</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.filesize.filesize" id="apidoc.element.filesize.filesize">
+        function <span class="apidocSignatureSpan"></span>filesize
+        <span class="apidocSignatureSpan">(arg)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function filesize(arg) {
+		var descriptor = arguments.length &#x3e; 1 &#x26;&#x26; arguments[1] !== undefined ? arguments[1] : {};
+
+		var result = [],
+		    val = 0,
+		    e = void 0,
+		    base = void 0,
+		    bits = void 0,
+		    ceil = void 0,
+		    full = void 0,
+		    fullforms = void 0,
+		    neg = void 0,
+		    num = void 0,
+		    output = void 0,
+		    round = void 0,
+		    unix = void 0,
+		    spacer = void 0,
+		    standard = void 0,
+		    symbols = void 0;
+
+		if (isNaN(arg)) {
+			throw new Error(&#x22;Invalid arguments&#x22;);
+		}
+
+		bits = descriptor.bits === true;
+		unix = descriptor.unix === true;
+		base = descriptor.base || 2;
+		round = descriptor.round !== undefined ? descriptor.round : unix ? 1 : 2;
+		spacer = descriptor.spacer !== undefined ? descriptor.spacer : unix ? &#x22;&#x22; : &#x22; &#x22;;
+		symbols = descriptor.symbols || descriptor.suffixes || {};
+		standard = base === 2 ? descriptor.standard || &#x22;jedec&#x22; : &#x22;jedec&#x22;;
+		output = descriptor.output || &#x22;string&#x22;;
+		full = descriptor.fullform === true;
+		fullforms = descriptor.fullforms instanceof Array ? descriptor.fullforms : [];
+		e = descriptor.exponent !== undefined ? descriptor.exponent : -1;
+		num = Number(arg);
+		neg = num &#x3c; 0;
+		ceil = base &#x3e; 2 ? 1000 : 1024;
+
+		// Flipping a negative number to determine the size
+		if (neg) {
+			num = -num;
+		}
+
+		// Determining the exponent
+		if (e === -1 || isNaN(e)) {
+			e = Math.floor(Math.log(num) / Math.log(ceil));
+
+			if (e &#x3c; 0) {
+				e = 0;
+			}
+		}
+
+		// Exceeding supported length, time to reduce &#x26; multiply
+		if (e &#x3e; 8) {
+			e = 8;
+		}
+
+		// Zero is now a special case because bytes divide by 1
+		if (num === 0) {
+			result[0] = 0;
+			result[1] = unix ? &#x22;&#x22; : symbol[standard][bits ? &#x22;bits&#x22; : &#x22;bytes&#x22;][e];
+		} else {
+			val = num / (base === 2 ? Math.pow(2, e * 10) : Math.pow(1000, e));
+
+			if (bits) {
+				val = val * 8;
+
+				if (val &#x3e;= ceil &#x26;&#x26; e &#x3c; 8) {
+					val = val / ceil;
+					e++;
+				}
+			}
+
+			result[0] = Number(val.toFixed(e &#x3e; 0 ? round : 0));
+			result[1] = base === 10 &#x26;&#x26; e === 1 ? bits ? &#x22;kb&#x22; : &#x22;kB&#x22; : symbol[standard][bits ? &#x22;bits&#x22; : &#x22;bytes&#x22;][e];
+
+			if (unix) {
+				result[1] = standard === &#x22;jedec&#x22; ? result[1].charAt(0) : e &#x3e; 0 ? result[1].replace(/B$/, &#x22;&#x22;) : result[1];
+
+				if (b.test(result[1])) {
+					result[0] = Math.floor(result[0]);
+					result[1] = &#x22;&#x22;;
+				}
+			}
+		}
+
+		// Decorating a &#x27;diff&#x27;
+		if (neg) {
+			result[0] = -result[0];
+		}
+
+		// Applying custom symbol
+		result[1] = symbols[result[1]] || result[1];
+
+		// Returning Array, Object, or String (default)
+		if (output === &#x22;array&#x22;) {
+			return result;
+		}
+
+		if (output === &#x22;exponent&#x22;) {
+			return e;
+		}
+
+		if (output === &#x22;object&#x22;) {
+			return { value: result[0], suffix: result[1], symbol: result[1] };
+		}
+
+		if (full) {
+			result[1] = fullforms[e] ? fullforms[e] : fullform[standard][e] + (bits ? &#x22;bit&#x22; : &#x22;byte&#x22;) + (result[0] === 1 ? &#x22;&#x22; : &#x22;s&#x22;);
+		}
+
+		return result.join(spacer);
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
@@ -108,6 +278,78 @@ const size = filesize.partial({standard: &#x22;iec&#x22;});
 
 size(265318); // &#x22;259.1 KiB&#x22;
 ...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.filesize.toString" id="apidoc.element.filesize.toString">
+        function <span class="apidocSignatureSpan">filesize.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.filesize.partial" id="apidoc.module.filesize.partial">module filesize.partial</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.filesize.partial.partial" id="apidoc.element.filesize.partial.partial">
+        function <span class="apidocSignatureSpan">filesize.</span>partial
+        <span class="apidocSignatureSpan">(opt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">partial = function (opt) {
+		return function (arg) {
+			return filesize(arg, opt);
+		};
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+filesize(1024, {output: &#x22;exponent&#x22;}); // 1
+filesize(265318, {standard: &#x22;iec&#x22;});  // &#x22;259.1 KiB&#x22;
+filesize(265318, {standard: &#x22;iec&#x22;, fullform: true}); // &#x22;259.1 kibibytes&#x22;
+filesize(12, {fullform: true, fullforms: [&#x22;байтов&#x22;]});  // &#x22;12 байтов&#x22;
+```
+
+## Partial Application
+`filesize.<span class="apidocCodeKeywordSpan">partial</span>()` takes the second parameter of `filesize()` and returns a new function
+ with the configuration applied
+upon execution. This can be used to reduce `Object` creation if you call `filesize()` without caching the `descriptor`
+in lexical scope.
+
+```javascript
+const size = filesize.partial({standard: &#x22;iec&#x22;});
+
+size(265318); // &#x22;259.1 KiB&#x22;
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.filesize.toString" id="apidoc.module.filesize.toString">module filesize.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.filesize.toString.toString" id="apidoc.element.filesize.toString.toString">
+        function <span class="apidocSignatureSpan">filesize.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
 

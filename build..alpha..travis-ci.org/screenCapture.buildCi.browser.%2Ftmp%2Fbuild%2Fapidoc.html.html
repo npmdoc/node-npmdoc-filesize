@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="http://filesizejs.com"
-
-    >filesize (v3.5.6)</a>
+    <a href="http://filesizejs.com">filesize (v3.5.6)</a>
 </h1>
 <h4>JavaScript library to generate a human readable String describing the file size</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.filesize">module filesize</a><ol>
 
@@ -130,7 +123,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function filesize(arg) {
-		var descriptor = arguments.length &#x3e; 1 &#x26;&#x26; arguments[1] !== undefined ? arguments[1] : {};
+		var descriptor = arguments.length &gt; 1 &amp;&amp; arguments[1] !== undefined ? arguments[1] : {};
 
 		var result = [],
 		    val = 0,
@@ -150,23 +143,23 @@
 		    symbols = void 0;
 
 		if (isNaN(arg)) {
-			throw new Error(&#x22;Invalid arguments&#x22;);
+			throw new Error("Invalid arguments");
 		}
 
 		bits = descriptor.bits === true;
 		unix = descriptor.unix === true;
 		base = descriptor.base || 2;
 		round = descriptor.round !== undefined ? descriptor.round : unix ? 1 : 2;
-		spacer = descriptor.spacer !== undefined ? descriptor.spacer : unix ? &#x22;&#x22; : &#x22; &#x22;;
+		spacer = descriptor.spacer !== undefined ? descriptor.spacer : unix ? "" : " ";
 		symbols = descriptor.symbols || descriptor.suffixes || {};
-		standard = base === 2 ? descriptor.standard || &#x22;jedec&#x22; : &#x22;jedec&#x22;;
-		output = descriptor.output || &#x22;string&#x22;;
+		standard = base === 2 ? descriptor.standard || "jedec" : "jedec";
+		output = descriptor.output || "string";
 		full = descriptor.fullform === true;
 		fullforms = descriptor.fullforms instanceof Array ? descriptor.fullforms : [];
 		e = descriptor.exponent !== undefined ? descriptor.exponent : -1;
 		num = Number(arg);
-		neg = num &#x3c; 0;
-		ceil = base &#x3e; 2 ? 1000 : 1024;
+		neg = num &lt; 0;
+		ceil = base &gt; 2 ? 1000 : 1024;
 
 		// Flipping a negative number to determine the size
 		if (neg) {
@@ -177,46 +170,46 @@
 		if (e === -1 || isNaN(e)) {
 			e = Math.floor(Math.log(num) / Math.log(ceil));
 
-			if (e &#x3c; 0) {
+			if (e &lt; 0) {
 				e = 0;
 			}
 		}
 
-		// Exceeding supported length, time to reduce &#x26; multiply
-		if (e &#x3e; 8) {
+		// Exceeding supported length, time to reduce &amp; multiply
+		if (e &gt; 8) {
 			e = 8;
 		}
 
 		// Zero is now a special case because bytes divide by 1
 		if (num === 0) {
 			result[0] = 0;
-			result[1] = unix ? &#x22;&#x22; : symbol[standard][bits ? &#x22;bits&#x22; : &#x22;bytes&#x22;][e];
+			result[1] = unix ? "" : symbol[standard][bits ? "bits" : "bytes"][e];
 		} else {
 			val = num / (base === 2 ? Math.pow(2, e * 10) : Math.pow(1000, e));
 
 			if (bits) {
 				val = val * 8;
 
-				if (val &#x3e;= ceil &#x26;&#x26; e &#x3c; 8) {
+				if (val &gt;= ceil &amp;&amp; e &lt; 8) {
 					val = val / ceil;
 					e++;
 				}
 			}
 
-			result[0] = Number(val.toFixed(e &#x3e; 0 ? round : 0));
-			result[1] = base === 10 &#x26;&#x26; e === 1 ? bits ? &#x22;kb&#x22; : &#x22;kB&#x22; : symbol[standard][bits ? &#x22;bits&#x22; : &#x22;bytes&#x22;][e];
+			result[0] = Number(val.toFixed(e &gt; 0 ? round : 0));
+			result[1] = base === 10 &amp;&amp; e === 1 ? bits ? "kb" : "kB" : symbol[standard][bits ? "bits" : "bytes"][e];
 
 			if (unix) {
-				result[1] = standard === &#x22;jedec&#x22; ? result[1].charAt(0) : e &#x3e; 0 ? result[1].replace(/B$/, &#x22;&#x22;) : result[1];
+				result[1] = standard === "jedec" ? result[1].charAt(0) : e &gt; 0 ? result[1].replace(/B$/, "") : result[1];
 
 				if (b.test(result[1])) {
 					result[0] = Math.floor(result[0]);
-					result[1] = &#x22;&#x22;;
+					result[1] = "";
 				}
 			}
 		}
 
-		// Decorating a &#x27;diff&#x27;
+		// Decorating a 'diff'
 		if (neg) {
 			result[0] = -result[0];
 		}
@@ -225,20 +218,20 @@
 		result[1] = symbols[result[1]] || result[1];
 
 		// Returning Array, Object, or String (default)
-		if (output === &#x22;array&#x22;) {
+		if (output === "array") {
 			return result;
 		}
 
-		if (output === &#x22;exponent&#x22;) {
+		if (output === "exponent") {
 			return e;
 		}
 
-		if (output === &#x22;object&#x22;) {
+		if (output === "object") {
 			return { value: result[0], suffix: result[1], symbol: result[1] };
 		}
 
 		if (full) {
-			result[1] = fullforms[e] ? fullforms[e] : fullform[standard][e] + (bits ? &#x22;bit&#x22; : &#x22;byte&#x22;) + (result[0] === 1 ? &#x22;&#x22; : &#x22;s&#x22;);
+			result[1] = fullforms[e] ? fullforms[e] : fullform[standard][e] + (bits ? "bit" : "byte") + (result[0] === 1 ? "" : "s");
 		}
 
 		return result.join(spacer);
@@ -261,10 +254,10 @@
 		};
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-filesize(1024, {output: &#x22;exponent&#x22;}); // 1
-filesize(265318, {standard: &#x22;iec&#x22;});  // &#x22;259.1 KiB&#x22;
-filesize(265318, {standard: &#x22;iec&#x22;, fullform: true}); // &#x22;259.1 kibibytes&#x22;
-filesize(12, {fullform: true, fullforms: [&#x22;байтов&#x22;]});  // &#x22;12 байтов&#x22;
+filesize(1024, {output: "exponent"}); // 1
+filesize(265318, {standard: "iec"});  // "259.1 KiB"
+filesize(265318, {standard: "iec", fullform: true}); // "259.1 kibibytes"
+filesize(12, {fullform: true, fullforms: ["Ð±Ð°Ð¹Ñ‚Ð¾Ð²"]});  // "12 Ð±Ð°Ð¹Ñ‚Ð¾Ð²"
 ```
 
 ## Partial Application
@@ -274,9 +267,9 @@ upon execution. This can be used to reduce `Object` creation if you call `filesi
 in lexical scope.
 
 ```javascript
-const size = filesize.partial({standard: &#x22;iec&#x22;});
+const size = filesize.partial({standard: "iec"});
 
-size(265318); // &#x22;259.1 KiB&#x22;
+size(265318); // "259.1 KiB"
 ...</pre></li>
     </ul>
 
@@ -315,10 +308,10 @@ size(265318); // &#x22;259.1 KiB&#x22;
 		};
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-filesize(1024, {output: &#x22;exponent&#x22;}); // 1
-filesize(265318, {standard: &#x22;iec&#x22;});  // &#x22;259.1 KiB&#x22;
-filesize(265318, {standard: &#x22;iec&#x22;, fullform: true}); // &#x22;259.1 kibibytes&#x22;
-filesize(12, {fullform: true, fullforms: [&#x22;байтов&#x22;]});  // &#x22;12 байтов&#x22;
+filesize(1024, {output: "exponent"}); // 1
+filesize(265318, {standard: "iec"});  // "259.1 KiB"
+filesize(265318, {standard: "iec", fullform: true}); // "259.1 kibibytes"
+filesize(12, {fullform: true, fullforms: ["Ð±Ð°Ð¹Ñ‚Ð¾Ð²"]});  // "12 Ð±Ð°Ð¹Ñ‚Ð¾Ð²"
 ```
 
 ## Partial Application
@@ -328,9 +321,9 @@ upon execution. This can be used to reduce `Object` creation if you call `filesi
 in lexical scope.
 
 ```javascript
-const size = filesize.partial({standard: &#x22;iec&#x22;});
+const size = filesize.partial({standard: "iec"});
 
-size(265318); // &#x22;259.1 KiB&#x22;
+size(265318); // "259.1 KiB"
 ...</pre></li>
     </ul>
 
@@ -361,3 +354,4 @@ size(265318); // &#x22;259.1 KiB&#x22;
     ]
 </div>
 </div>
+</body></html>
