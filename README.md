@@ -1,6 +1,6 @@
 # npmdoc-filesize
 
-#### api documentation for  [filesize (v3.5.6)](http://filesizejs.com)  [![npm package](https://img.shields.io/npm/v/npmdoc-filesize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-filesize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-filesize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-filesize)
+#### basic api documentation for  [filesize (v3.5.6)](http://filesizejs.com)  [![npm package](https://img.shields.io/npm/v/npmdoc-filesize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-filesize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-filesize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-filesize)
 
 #### JavaScript library to generate a human readable String describing the file size
 
@@ -75,7 +75,8 @@
     "scripts": {
         "test": "grunt test"
     },
-    "version": "3.5.6"
+    "version": "3.5.6",
+    "bin": {}
 }
 ```
 
