@@ -79,41 +79,6 @@
 
         </li>
 
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.filesize.toString">
-            function <span class="apidocSignatureSpan">filesize.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.filesize.partial">module filesize.partial</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.filesize.partial.partial">
-            function <span class="apidocSignatureSpan">filesize.</span>partial
-            <span class="apidocSignatureSpan">(opt)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.filesize.toString">module filesize.toString</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.filesize.toString.toString">
-            function <span class="apidocSignatureSpan">filesize.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
     </ol></li>
 
 </ol></div>
@@ -278,78 +243,6 @@ const size = filesize.partial({standard: &#x22;iec&#x22;});
 
 size(265318); // &#x22;259.1 KiB&#x22;
 ...</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.filesize.toString" id="apidoc.element.filesize.toString">
-        function <span class="apidocSignatureSpan">filesize.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.filesize.partial" id="apidoc.module.filesize.partial">module filesize.partial</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.filesize.partial.partial" id="apidoc.element.filesize.partial.partial">
-        function <span class="apidocSignatureSpan">filesize.</span>partial
-        <span class="apidocSignatureSpan">(opt)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">partial = function (opt) {
-		return function (arg) {
-			return filesize(arg, opt);
-		};
-	}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-filesize(1024, {output: &#x22;exponent&#x22;}); // 1
-filesize(265318, {standard: &#x22;iec&#x22;});  // &#x22;259.1 KiB&#x22;
-filesize(265318, {standard: &#x22;iec&#x22;, fullform: true}); // &#x22;259.1 kibibytes&#x22;
-filesize(12, {fullform: true, fullforms: [&#x22;байтов&#x22;]});  // &#x22;12 байтов&#x22;
-```
-
-## Partial Application
-`filesize.<span class="apidocCodeKeywordSpan">partial</span>()` takes the second parameter of `filesize()` and returns a new function
- with the configuration applied
-upon execution. This can be used to reduce `Object` creation if you call `filesize()` without caching the `descriptor`
-in lexical scope.
-
-```javascript
-const size = filesize.partial({standard: &#x22;iec&#x22;});
-
-size(265318); // &#x22;259.1 KiB&#x22;
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.filesize.toString" id="apidoc.module.filesize.toString">module filesize.toString</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.filesize.toString.toString" id="apidoc.element.filesize.toString.toString">
-        function <span class="apidocSignatureSpan">filesize.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
 
